@@ -1,7 +1,9 @@
 <% unless @titles.size == 0 %>
   <ul>
-    <% @titles.each do |title| %>
-      <li><%= title %></li>
+    <% @titles.each_with_index do |title, index| %>
+      <li>
+        <a href='/memos/<%= index %>'><%= title %></a>
+      </li>
     <% end %>
   </ul>
 <% end %>

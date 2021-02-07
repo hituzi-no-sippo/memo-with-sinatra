@@ -21,3 +21,12 @@ post '/memos/new' do
   memo_list.add(params[:title], params[:body])
   redirect '/'
 end
+
+get '/memos/:index' do |index|
+  @page_title = '詳細'
+  @memo = memo_list.data[index.to_i]
+
+  redirect '/' if @memo.nil?
+
+  erb :detail
+end

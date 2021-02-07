@@ -1,0 +1,4 @@
+<h2><%= @memo['title'] %></h2>
+<% @memo['body'].to_s.split("\r\n").each do |str| %>
+  <p><%= str %></p>
+<% end %>
