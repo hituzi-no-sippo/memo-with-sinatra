@@ -18,6 +18,11 @@ class MemoList
     write_storage
   end
 
+  def delete(index)
+    @memos.delete_at(index)
+    write_storage
+  end
+
   private
 
   def convert_to_valid_format(title, body)

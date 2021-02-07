@@ -28,5 +28,11 @@ get '/memos/:index' do |index|
 
   redirect '/' if @memo.nil?
 
+  @index = index
   erb :detail
+end
+
+delete '/memos/:index' do |index|
+  memo_list.delete(index.to_i)
+  redirect '/'
 end
