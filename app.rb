@@ -50,3 +50,8 @@ delete '/memos/:index' do |index|
   memo_list.delete(index.to_i)
   redirect '/'
 end
+
+not_found do
+  @page_title = 'ファイルが存在しません'
+  erb :not_found
+end
