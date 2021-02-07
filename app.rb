@@ -32,6 +32,20 @@ get '/memos/:index' do |index|
   erb :detail
 end
 
+get '/memos/:index/edit' do |index|
+  @page_title = '編集'
+  memo = memo_list.data[index.to_i]
+  @title = memo['title']
+  @body = memo['body']
+  @index = index
+  erb :edit
+end
+
+patch '/memos/:index' do |index|
+  memo_list.update(index.to_i, params[:title], params[:body])
+  redirect '/'
+end
+
 delete '/memos/:index' do |index|
   memo_list.delete(index.to_i)
   redirect '/'

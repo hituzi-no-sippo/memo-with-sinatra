@@ -18,6 +18,13 @@ class MemoList
     write_storage
   end
 
+  def update(index, title, body)
+    return if @memos.size <= index
+
+    @memos[index] = convert_to_valid_format(title, body)
+    write_storage
+  end
+
   def delete(index)
     @memos.delete_at(index)
     write_storage
