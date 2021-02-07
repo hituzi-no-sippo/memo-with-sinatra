@@ -1,11 +1,13 @@
-<h2><%= @memo['title'] %></h2>
+<h2 class='py-2 fst-italic overflow-auto'><%= @memo['title'] %></h2>
 <% @memo['body'].to_s.split("\r\n").each do |str| %>
-  <p><%= str %></p>
+  <p class='fs-3 fw-light text-break'><%= str %></p>
 <% end %>
-<div>
-  <a href='/memos/<%= @index %>/edit'><button>編集</button></a>
+<div class='btn-group d-flex justify-content-evenly'>
+  <a href='/memos/<%= @index %>/edit'>
+    <button class='btn btn-primary px-5'>編集</button>
+  </a>
   <form method='POST' action='/memos/<%= @index %>'>
     <input type='hidden' name='_method' value='delete' />
-    <button>削除</button>
+    <button class='btn btn-danger px-5'>削除</button>
   </form>
 </div>

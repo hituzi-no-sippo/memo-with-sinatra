@@ -1,10 +1,15 @@
 <% unless @titles.size == 0 %>
-  <ul>
+  <ul class='list-group list-unstyled my-4'>
     <% @titles.each_with_index do |title, index| %>
-      <li>
-        <a href='/memos/<%= index %>'><%= title %></a>
+      <li class='fs-3 fw-bolder'>
+        <a href='/memos/<%= index %>'
+           class='list-group-item list-group-item-action overflow-hidden'>
+          <%= title %>
+        </a>
       </li>
     <% end %>
   </ul>
 <% end %>
-<a href="/memos/new"><button>追加</button></a>
+<a href='/memos/new'>
+  <button class='btn btn-primary my-1'>追加</button>
+</a>
