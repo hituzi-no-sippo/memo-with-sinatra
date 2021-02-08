@@ -35,6 +35,9 @@ end
 get '/memos/:index/edit' do |index|
   @page_title = '編集'
   memo = memo_list.data[index.to_i]
+
+  redirect '/' if memo.nil?
+
   @title = memo['title']
   @body = memo['body']
   @index = index
