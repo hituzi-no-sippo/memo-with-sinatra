@@ -8,7 +8,7 @@ memo_db = MemoDB.new
 
 get "/\(memos\)?" do
   @page_title = 'Memoアプリ'
-  @memos = memo_db.fetch_all
+  @memos = memo_db.memos
   erb :index
 end
 
@@ -24,7 +24,7 @@ end
 
 get '/memos/:id' do |id|
   @page_title = '詳細'
-  @memo = memo_db.find(id.to_sym)
+  @memo = memo_db.memos[id.to_sym]
 
   redirect '/memos' if @memo.nil?
 
@@ -34,7 +34,7 @@ end
 
 get '/memos/:id/edit' do |id|
   @page_title = '編集'
-  memo = memo_db.find(id.to_sym)
+  memo = memo_db.memos[id.to_sym]
 
   redirect '/memos/' if memo.nil?
 

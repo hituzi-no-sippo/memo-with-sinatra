@@ -7,24 +7,10 @@ class MemoDB
   def initialize
     create_db unless exist_db?
     create_table
+    sync_memos
   end
 
-  def fetch_all
-    connection = connect
-    memos = connection.exec('SELECT * FROM memos ORDER BY id ASC') do |records|
-      records.each_with_object({}) do |record, result|
-        result.store(record['id'].to_sym,
-                     { title: record['title'], body: record['body'] })
-      end
-    end
-    connection.finish
-
-    memos
-  end
-
-  def find(id)
-    fetch_all[id]
-  end
+  attr_reader :memos
 
   def add(title, body)
     execute_sql(
@@ -39,7 +25,7 @@ class MemoDB
   end
 
   def update(id, title, body)
-    return if find(id).nil?
+    return if @memos[id].nil?
 
     execute_sql(
       'update',
@@ -80,6 +66,17 @@ class MemoDB
     connection.prepare(stmt_name, sql)
     connection.exec_prepared(stmt_name, params)
     connection.finish
+    sync_memos
   end
 
+  def sync_memos
+    connection = connect
+    @memos = connection.exec('SELECT * FROM memos ORDER BY id ASC') do |records|
+      records.each_with_object({}) do |record, result|
+        result.store(record['id'].to_sym,
+                     { title: record['title'], body: record['body'] })
+      end
+    end
+    connection.finish
+  end
 end
