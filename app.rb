@@ -2,13 +2,13 @@
 
 require 'sinatra'
 
-require_relative 'memo_list'
+require_relative 'memo_db'
 
-memo_list = MemoList.new("#{settings.root}/memos.yaml")
+memo_db = MemoDB.new
 
 get "/\(memos\)?" do
   @page_title = 'Memoアプリ'
-  @titles = memo_list.data.map { |memo| memo['title'] }
+  @memos = memo_db.fetch_all
   erb :index
 end
 
@@ -18,39 +18,39 @@ get '/memos/new' do
 end
 
 post '/memos/new' do
-  memo_list.add(params[:title], params[:body])
+  memo_db.add(params[:title], params[:body])
   redirect '/memos'
 end
 
-get '/memos/:index' do |index|
+get '/memos/:id' do |id|
   @page_title = '詳細'
-  @memo = memo_list.data[index.to_i]
+  @memo = memo_db.find(id.to_sym)
 
   redirect '/memos' if @memo.nil?
 
-  @index = index
+  @id = id
   erb :detail
 end
 
-get '/memos/:index/edit' do |index|
+get '/memos/:id/edit' do |id|
   @page_title = '編集'
-  memo = memo_list.data[index.to_i]
+  memo = memo_db.find(id.to_sym)
 
   redirect '/memos/' if memo.nil?
 
-  @title = memo['title']
-  @body = memo['body']
-  @index = index
+  @title = memo[:title]
+  @body = memo[:body]
+  @id = id
   erb :edit
 end
 
-patch '/memos/:index' do |index|
-  memo_list.update(index.to_i, params[:title], params[:body])
+patch '/memos/:id' do |id|
+  memo_db.update(id.to_sym, params[:title], params[:body])
   redirect '/memos'
 end
 
-delete '/memos/:index' do |index|
-  memo_list.delete(index.to_i)
+delete '/memos/:id' do |id|
+  memo_db.delete(id)
   redirect '/memos'
 end
 

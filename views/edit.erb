@@ -1,7 +1,7 @@
-<% isAdd = @index.nil? %>
+<% isAdd = @id.nil? %>
 <form
   method='post'
-  action='/memos/<%= isAdd ? 'new' : @index %>'
+  action='/memos/<%= isAdd ? 'new' : @id %>'
 >
   <% unless isAdd %>
     <input type='hidden' name='_method' value='patch' />

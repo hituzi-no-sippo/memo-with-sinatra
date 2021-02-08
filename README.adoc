@@ -3,9 +3,9 @@
 :!author-email:
 :author: {author-name}
 :!email: {author-email}
-:revnumber: v1.1.0
-:revdate: 2021-02-10T08:55:00+0900
-:revremark: メモ一覧取得のURLを変更
+:revnumber: v1.2.0
+:revdate: 2021-02-10T09:05:00+0900
+:revremark: データの保存方法を変更
 :doctype: article
 :description: {doctitle} README
 :title:
@@ -109,7 +109,13 @@ image::{delete-gif-url}[delete, link={delete-gif-url}, window=_blank]
 
 == データの読み込み・保存方法
 
-YAML形式で `./memos.yaml` として読み込み、保存します。
+link:https://github.com/ged/ruby-pg[pg^]でDBに読み込み、保存します。
+メモを保存するデータベースとテーブル名は固定で、存在しない場合は起動時に自動で作成します。
+
+[horizontal]
+データベース名:: memo_with_sinatra
+テーブル名:: memos
+ユーザー名:: postgres
 
 == XSS対策
 
