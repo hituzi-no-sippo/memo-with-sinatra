@@ -3,9 +3,9 @@
 :!author-email:
 :author: {author-name}
 :!email: {author-email}
-:revnumber: v1.0.0
-:revdate: 2021-02-08T00:30:00+0900
-:revremark: init
+:revnumber: v1.1.0
+:revdate: 2021-02-10T08:55:00+0900
+:revremark: メモ一覧取得のURLを変更
 :doctype: article
 :description: {doctitle} README
 :title:
@@ -94,7 +94,7 @@ image::{delete-gif-url}[delete, link={delete-gif-url}, window=_blank]
 [cols=3, options="autowidth"]
 |===
 |mehotd |URL                 |役割
-|GET    |/                   |メモ一覧画面
+|GET    |/ or /memos         |メモ一覧画面
 |GET    |/memos/new          |メモ作成画面
 |POST   |/memos/new          |メモを作成
 |GET    |/memos/{index}      |`index` のメモの詳細画面

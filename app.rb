@@ -6,7 +6,7 @@ require_relative 'memo_list'
 
 memo_list = MemoList.new("#{settings.root}/memos.yaml")
 
-get '/' do
+get "/\(memos\)?" do
   @page_title = 'Memoアプリ'
   @titles = memo_list.data.map { |memo| memo['title'] }
   erb :index
@@ -19,14 +19,14 @@ end
 
 post '/memos/new' do
   memo_list.add(params[:title], params[:body])
-  redirect '/'
+  redirect '/memos'
 end
 
 get '/memos/:index' do |index|
   @page_title = '詳細'
   @memo = memo_list.data[index.to_i]
 
-  redirect '/' if @memo.nil?
+  redirect '/memos' if @memo.nil?
 
   @index = index
   erb :detail
@@ -36,7 +36,7 @@ get '/memos/:index/edit' do |index|
   @page_title = '編集'
   memo = memo_list.data[index.to_i]
 
-  redirect '/' if memo.nil?
+  redirect '/memos/' if memo.nil?
 
   @title = memo['title']
   @body = memo['body']
@@ -46,12 +46,12 @@ end
 
 patch '/memos/:index' do |index|
   memo_list.update(index.to_i, params[:title], params[:body])
-  redirect '/'
+  redirect '/memos'
 end
 
 delete '/memos/:index' do |index|
   memo_list.delete(index.to_i)
-  redirect '/'
+  redirect '/memos'
 end
 
 not_found do
