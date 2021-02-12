@@ -1,5 +1,5 @@
 <h2 class='py-2 fst-italic overflow-auto'><%= @memo['title'] %></h2>
-<% @memo['body'].to_s.split("\r\n").each do |str| %>
+<% @memo['body'].each_line do |str| %>
   <p class='fs-3 fw-light text-break'><%= str %></p>
 <% end %>
 <div class='btn-group d-flex justify-content-evenly'>
