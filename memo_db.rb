@@ -57,7 +57,7 @@ class MemoDB
   def create_table
     connect.exec('
       CREATE TABLE IF NOT EXISTS memos
-      ( id serial PRIMARY KEY, title text not null, body text not null)
+      (id serial PRIMARY KEY, title text not null, body text not null)
     ')
   end
 
