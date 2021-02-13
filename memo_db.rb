@@ -72,9 +72,8 @@ class MemoDB
   def sync_memos
     connection = connect
     @memos = connection.exec('SELECT * FROM memos ORDER BY id ASC') do |records|
-      records.each_with_object({}) do |record, result|
-        result.store(record['id'].to_sym,
-                     { title: record['title'], body: record['body'] })
+      records.to_h do |record|
+        [record['id'].to_sym, { title: record['title'], body: record['body'] }]
       end
     end
     connection.finish
