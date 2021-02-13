@@ -2,7 +2,7 @@
 
 require 'pg'
 
-class MemoDB
+module MemoDB
   class << self
     def setup
       create_db unless exist_db?
