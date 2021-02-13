@@ -43,6 +43,6 @@ class MemoList
   end
 
   def exist?(id)
-    @memos.has_key?(id)
+    @memos.key?(id)
   end
 end
