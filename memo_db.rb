@@ -33,20 +33,18 @@ class MemoDB
     def execute_sql(stmt_name, sql, params)
       connection = connect
       connection.prepare(stmt_name, sql)
-      connection.exec_prepared(stmt_name, params)
+      result = connection.exec_prepared(stmt_name, params)
       connection.finish
+
+      result
     end
 
     def fetch_all
-      connection = connect
-      memos = connection.exec('SELECT * FROM memos ORDER BY id ASC') do |records|
-        records.to_h do |record|
-          [record['id'].to_sym, { title: record['title'], body: record['body'] }]
-        end
+      execute_sql(
+        'select', 'SELECT * FROM memos ORDER BY id ASC', []
+      ).to_h do |record|
+        [record['id'].to_sym, { title: record['title'], body: record['body'] }]
       end
-      connection.finish
-
-      memos
     end
 
     def add(title, body)
