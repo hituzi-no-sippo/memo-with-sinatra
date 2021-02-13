@@ -3,9 +3,9 @@
 :!author-email:
 :author: {author-name}
 :!email: {author-email}
-:revnumber: v1.2.0
-:revdate: 2021-02-10T09:05:00+0900
-:revremark: データの保存方法を変更
+:revnumber: v1.3.0
+:revdate: 2021-02-13T10:30:00+0900
+:revremark: setup方法を追加
 :doctype: article
 :description: {doctitle} README
 :title:
@@ -48,6 +48,7 @@ rubocomp:: v1.9 (設定は初期設定)
 
 . `git clone {repository-url}` を実行して、このリポジトリをクローン
 . `bundle add` でgemをインストール
+. `ruby setup.rb` を実行
 . `ruby app.rb` で起動
 . {base-url} に接続
 
