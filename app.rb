@@ -2,13 +2,13 @@
 
 require 'sinatra'
 
-require_relative 'memo_db'
+require_relative 'memo_list'
 
-memo_db = MemoDB.new
+memo_list = MemoList.new
 
 get "/\(memos\)?" do
   @page_title = 'Memoアプリ'
-  @memos = memo_db.memos
+  @memos = memo_list.data
   erb :index
 end
 
@@ -18,13 +18,13 @@ get '/memos/new' do
 end
 
 post '/memos/new' do
-  memo_db.add(params[:title], params[:body])
+  memo_list.add(params[:title], params[:body])
   redirect '/memos'
 end
 
 get '/memos/:id' do |id|
   @page_title = '詳細'
-  @memo = memo_db.memos[id.to_sym]
+  @memo = memo_list.data[id.to_sym]
 
   redirect '/memos' if @memo.nil?
 
@@ -34,7 +34,7 @@ end
 
 get '/memos/:id/edit' do |id|
   @page_title = '編集'
-  memo = memo_db.memos[id.to_sym]
+  memo = memo_list.data[id.to_sym]
 
   redirect '/memos/' if memo.nil?
 
@@ -45,12 +45,12 @@ get '/memos/:id/edit' do |id|
 end
 
 patch '/memos/:id' do |id|
-  memo_db.update(id.to_sym, params[:title], params[:body])
+  memo_list.update(id.to_sym, params[:title], params[:body])
   redirect '/memos'
 end
 
 delete '/memos/:id' do |id|
-  memo_db.delete(id)
+  memo_list.delete(id.to_sym)
   redirect '/memos'
 end
 
