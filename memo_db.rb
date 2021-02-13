@@ -9,36 +9,6 @@ class MemoDB
       create_table
     end
 
-    def exist_db?
-      `psql -U postgres -l | grep memo_with_sinatra` != ''
-    end
-
-    def create_db
-      `psql -U postgres -c '
-        CREATE DATABASE memo_with_sinatra WITH OWNER postgres ENCODING = "UTF8"
-      '`
-    end
-
-    def connect
-      PG.connect(user: 'postgres', dbname: 'memo_with_sinatra')
-    end
-
-    def create_table
-      connect.exec('
-        CREATE TABLE IF NOT EXISTS memos
-        ( id serial PRIMARY KEY, title text not null, body text not null)
-      ')
-    end
-
-    def execute_sql(stmt_name, sql, params)
-      connection = connect
-      connection.prepare(stmt_name, sql)
-      result = connection.exec_prepared(stmt_name, params)
-      connection.finish
-
-      result
-    end
-
     def fetch_all
       execute_sql(
         'select', 'SELECT * FROM memos ORDER BY id ASC', []
@@ -65,6 +35,38 @@ class MemoDB
 
     def delete(id)
       execute_sql('delete', 'DELETE FROM memos WHERE id=$1', [id])
+    end
+
+    private
+
+    def connect
+      PG.connect(user: 'postgres', dbname: 'memo_with_sinatra')
+    end
+
+    def exist_db?
+      `psql -U postgres -l | grep memo_with_sinatra` != ''
+    end
+
+    def create_db
+      `psql -U postgres -c '
+        CREATE DATABASE memo_with_sinatra WITH OWNER postgres ENCODING = "UTF8"
+      '`
+    end
+
+    def create_table
+      connect.exec('
+        CREATE TABLE IF NOT EXISTS memos
+        ( id serial PRIMARY KEY, title text not null, body text not null)
+      ')
+    end
+
+    def execute_sql(stmt_name, sql, params)
+      connection = connect
+      connection.prepare(stmt_name, sql)
+      result = connection.exec_prepared(stmt_name, params)
+      connection.finish
+
+      result
     end
   end
 end
