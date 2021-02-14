@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 require 'sinatra'
+require 'erb'
 
 require_relative 'memo_list'
+
+helpers do
+  def html_escape(str)
+    ERB::Util.html_escape(str)
+  end
+end
 
 memo_list = MemoList.new
 

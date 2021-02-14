@@ -9,7 +9,7 @@
   <input
     type='text'
     name='title'
-    value='<%= isAdd ? "" : @title %>'
+    value='<%= html_escape(isAdd ? "" : @title) %>'
     placeholder='タイトルを入力して下さい'
     autofocus
     required
@@ -19,7 +19,7 @@
     name='body'
     placeholder='本文を入力して下さい'
     class='form-control mb-3'
-  ><%= isAdd ? '' : @body %></textarea>
+  ><%= html_escape(isAdd ? '' : @body) %></textarea>
   <button
     type='submit'
     class='btn btn-primary'

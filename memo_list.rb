@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'erb'
-
 require_relative 'memo_db'
 
 class MemoList
@@ -14,14 +12,18 @@ class MemoList
   end
 
   def add(title, body)
-    MemoDB.add(html_escape(title), html_escape(body))
+    p title
+    p body
+    MemoDB.add(title, body)
     sync_with_db
   end
 
   def update(id, title, body)
+    p title
+    p body
     return unless exist?(id)
 
-    MemoDB.update(id, html_escape(title), html_escape(body))
+    MemoDB.update(id, title, body)
     sync_with_db
   end
 
@@ -33,10 +35,6 @@ class MemoList
   end
 
   private
-
-  def html_escape(str)
-    ERB::Util.html_escape(str)
-  end
 
   def sync_with_db
     @memos = MemoDB.fetch_all
