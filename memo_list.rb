@@ -12,15 +12,11 @@ class MemoList
   end
 
   def add(title, body)
-    p title
-    p body
     MemoDB.add(title, body)
     sync_with_db
   end
 
   def update(id, title, body)
-    p title
-    p body
     return unless exist?(id)
 
     MemoDB.update(id, title, body)
