@@ -1,0 +1,15 @@
+<% unless @memos.size == 0 %>
+  <ul class='list-group list-unstyled my-4'>
+    <% @memos.each do |id, memo| %>
+      <li class='fs-3 fw-bolder'>
+        <a href='/memos/<%= id %>'
+           class='list-group-item list-group-item-action overflow-hidden'>
+          <%= html_escape(memo[:title]) %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<a href='/memos/new'>
+  <button class='btn btn-primary my-1'>追加</button>
+</a>

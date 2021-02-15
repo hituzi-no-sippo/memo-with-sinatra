@@ -1,0 +1,29 @@
+<% isAdd = @id.nil? %>
+<form
+  method='post'
+  action='/memos/<%= isAdd ? 'new' : @id %>'
+>
+  <% unless isAdd %>
+    <input type='hidden' name='_method' value='patch' />
+  <% end %>
+  <input
+    type='text'
+    name='title'
+    value='<%= isAdd ? "" : html_escape(@title) %>'
+    placeholder='タイトルを入力して下さい'
+    autofocus
+    required
+    class='form-control mb-3'
+  >
+  <textarea
+    name='body'
+    placeholder='本文を入力して下さい'
+    class='form-control mb-3'
+  ><%= isAdd ? '' : html_escape(@body) %></textarea>
+  <button
+    type='submit'
+    class='btn btn-primary'
+  >
+    <%= isAdd ? '作成' : '更新' %>
+  </button>
+</form>

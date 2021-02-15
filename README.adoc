@@ -1,0 +1,127 @@
+= memo-with-sinatra
+:author-name: hituzi no sippo
+:!author-email:
+:author: {author-name}
+:!email: {author-email}
+:revnumber: v1.3.0
+:revdate: 2021-02-13T10:30:00+0900
+:revremark: setup方法を追加
+:doctype: article
+:description: {doctitle} README
+:title:
+:title-separtor: :
+:experimental:
+:showtitle:
+:!sectnums:
+:sectids:
+:toc: auto
+:sectlinks:
+:sectanchors:
+:idprefix:
+:idseparator: -
+:xrefstyle: full
+:!example-caption:
+:!figure-caption:
+:!table-caption:
+:!listing-caption:
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+ifndef::env-github[:icons: font]
+:github-url: https://github.com
+:github-profile-url: {github-url}/hituzi-no-sippo
+:repository-url: {github-profile-url}/{doctitle}
+:git-base-url: https://user-images.githubusercontent.com/43565959
+
+== 環境
+
+Ruby:: v2.7
+sinatra:: v2.1
+rubocomp:: v1.9 (設定は初期設定)
+
+== 起動手順
+:base-url: http://localhost:4567
+
+. `git clone {repository-url}` を実行して、このリポジトリをクローン
+. `bundle add` でgemをインストール
+. `ruby setup.rb` を実行
+. `ruby app.rb` で起動
+. {base-url} に接続
+
+== 操作手順
+
+.追加
+. {base-url} に接続
+. 下にある追加ボタンをクリック
+. タイトルと本文を入力して、作成ボタンをクリック
+--
+[WARNING]
+====
+タイトルは必須入力です。
+====
+--
+
+:add-gif-url: {git-base-url}/107150034-236d1500-699f-11eb-99d8-33e73bab8d43.gif
+image::{add-gif-url}[add, link={add-gif-url}, window=_blank]
+
+.詳細取得
+. {base-url} に接続
+. 詳細を見たいメモをクリック
+
+:detail-gif-url: {git-base-url}/107150033-236d1500-699f-11eb-8818-08856c0b7cff.gif
+image::{detail-gif-url}[detail, link={detail-gif-url}, window=_blank]
+
+.更新
+. 詳細取得の画面を表示
+. 左下にある編集ボタンをクリック
+. タイトルと本文を入力して、更新ボタンをクリック
+
+:update-gif-url: {git-base-url}/107150034-236d1500-699f-11eb-99d8-33e73bab8d43.gif
+image::{update-gif-url}[update, link={update-gif-url}, window=_blank]
+
+.削除
+. 詳細取得の画面を表示
+. 右下にある削除ボタンをクリック
+
+:delete-gif-url: {git-base-url}/107150031-210abb00-699f-11eb-86c3-8ec61f1e64b7.gif
+image::{delete-gif-url}[delete, link={delete-gif-url}, window=_blank]
+
+== URL一覧
+
+[cols=3, options="autowidth"]
+|===
+|mehotd |URL                 |役割
+|GET    |/ or /memos         |メモ一覧画面
+|GET    |/memos/new          |メモ作成画面
+|POST   |/memos/new          |メモを作成
+|GET    |/memos/{index}      |`index` のメモの詳細画面
+|GET    |/memos/{index}/edit |`index` のメモ編集画面
+|PATCH  |/memos/{index}      |`index` のメモ更新
+|DELETE |/memos/{index}      |`index` のメモ削除
+|===
+
+== RPGパターンを利用
+
+メモ作成、更新、削除時にlink:http://sinatrarb.com/intro-ja.html[sinatra^]の `redirect` を利用して、RPGパターンで実装しています。
+
+== データの読み込み・保存方法
+
+link:https://github.com/ged/ruby-pg[pg^]でDBに読み込み、保存します。
+メモを保存するデータベースとテーブル名は固定で、存在しない場合は起動時に自動で作成します。
+
+[horizontal]
+データベース名:: memo_with_sinatra
+テーブル名:: memos
+ユーザー名:: postgres
+
+== XSS対策
+
+link:https://docs.ruby-lang.org/ja/2.7.0/class/ERB=3a=3aUtil.html[
+ERB::Util^]の `html_escape` をlink:./memo_list.rb[memo_list.rb^]で利用しています。
+
+:escape-html-gif-url: {git-base-url}/107150828-1a7e4280-69a3-11eb-81ea-376477d0c0a6.gif
+image::{escape-html-gif-url}[escape-html, link={escape-html-gif-url}, window=_blank]
