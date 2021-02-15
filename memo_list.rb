@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'yaml'
-require 'erb'
+require_relative 'memo_db'
 
 class MemoList
-  def initialize(storage_path)
-    @memos = File.file?(storage_path) ? YAML.load_file(storage_path) : []
-    @storage_path = storage_path
+  def initialize
+    sync_with_db
   end
 
   def data
@@ -14,33 +12,31 @@ class MemoList
   end
 
   def add(title, body)
-    @memos.push(convert_to_valid_format(title, body))
-    write_storage
+    MemoDB.add(title, body)
+    sync_with_db
   end
 
-  def update(index, title, body)
-    return if @memos.size <= index
+  def update(id, title, body)
+    return unless exist?(id)
 
-    @memos[index] = convert_to_valid_format(title, body)
-    write_storage
+    MemoDB.update(id, title, body)
+    sync_with_db
   end
 
-  def delete(index)
-    @memos.delete_at(index)
-    write_storage
+  def delete(id)
+    return unless exist?(id)
+
+    MemoDB.delete(id)
+    sync_with_db
   end
 
   private
 
-  def convert_to_valid_format(title, body)
-    { 'title' => html_escape(title), 'body' => html_escape(body) }
+  def sync_with_db
+    @memos = MemoDB.fetch_all
   end
 
-  def html_escape(str)
-    ERB::Util.html_escape(str)
-  end
-
-  def write_storage
-    YAML.dump(@memos, File.open(@storage_path, 'w'))
+  def exist?(id)
+    @memos.key?(id)
   end
 end

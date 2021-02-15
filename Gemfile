@@ -13,3 +13,5 @@ gem 'rubocop', '~> 1.9'
 gem 'sinatra', '~> 2.1'
 
 gem 'rubocop-fjord', '~> 0.1.4'
+
+gem 'pg', '~> 1.2'
