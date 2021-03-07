@@ -3,9 +3,9 @@
 :!author-email:
 :author: {author-name}
 :!email: {author-email}
-:revnumber: v1.3.0
-:revdate: 2021-02-13T10:30:00+0900
-:revremark: setup方法を追加
+:revnumber: v1.3.1
+:revdate: 2021-03-07T13:05:00+0900
+:revremark: html_escapeを実行しているファイル名を修正
 :doctype: article
 :description: {doctitle} README
 :title:
@@ -121,7 +121,7 @@ link:https://github.com/ged/ruby-pg[pg^]でDBに読み込み、保存します�
 == XSS対策
 
 link:https://docs.ruby-lang.org/ja/2.7.0/class/ERB=3a=3aUtil.html[
-ERB::Util^]の `html_escape` をlink:./memo_list.rb[memo_list.rb^]で利用しています。
+ERB::Util^]の `html_escape` をlink:views/edit.erb[^]で利用しています。
 
 :escape-html-gif-url: {git-base-url}/107150828-1a7e4280-69a3-11eb-81ea-376477d0c0a6.gif
 image::{escape-html-gif-url}[escape-html, link={escape-html-gif-url}, window=_blank]
